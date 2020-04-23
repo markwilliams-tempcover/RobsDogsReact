@@ -12,6 +12,12 @@ export class Dogs extends Component {
     return (
         <div>
             <h1>Hello, {robsDogs.ownerName}!</h1>
+            <p>You have a total of {robsDogs.dogNames.length} dogs. They are:</p>
+            <ul>
+                {robsDogs.dogNames.map((dog) => (
+                <li>{dog}</li>
+                ))}
+            </ul>
         </div>
     );
   }
