@@ -7,19 +7,21 @@ namespace Ui.ViewModelMappers
 {
 	public class DogOwnerViewModelMapper
 	{
+        private readonly IDogOwnerService _dogOwnerService;
+
+        public DogOwnerViewModelMapper(IDogOwnerService dogOwnerService) {
+            _dogOwnerService = dogOwnerService;
+        }
+
 		public DogOwnerListViewModel GetAllDogOwners()
 		{
-			var dogOwnerService = new DogOwnerService();
-			var dogOwners = dogOwnerService.GetAllDogOwners();
+			var dogOwners = _dogOwnerService.GetAllDogOwners();
 			var dogOwnerListViewModel = new DogOwnerListViewModel
 			{
 				DogOwnerViewModels = dogOwners.Select(e => new DogOwnerViewModel
 				{
 					OwnerName = e.OwnerName,
-					DogNames = new List<string>
-					{
-						e.DogName
-					}
+					DogNames = e.DogNames
 				}).ToList()
 			};
 

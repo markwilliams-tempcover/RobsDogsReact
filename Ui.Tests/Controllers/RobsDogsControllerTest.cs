@@ -1,6 +1,10 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using Ui.Controllers;
+using Ui.Entities;
+using Ui.Services;
 
 namespace Ui.Tests.Controllers
 {
@@ -10,16 +14,36 @@ namespace Ui.Tests.Controllers
 		[TestMethod]
 		public void Index()
 		{
-			// Arrange
-			RobsDogsController controller = new RobsDogsController();
+            // Arrange
+            var mockRepo = new Mock<IDogOwnerService>();
+            mockRepo
+                .Setup(r => r.GetAllDogOwners())
+                .Returns(GetTestDogOwners());
+
+			RobsDogsController controller = new RobsDogsController(mockRepo.Object);
 
 			// Act
 			ViewResult result = controller.Index() as ViewResult;
 
-			// Assert
-			Assert.IsNotNull(result);
-			// Should be testing/verifying call to GetAllDogOwners and subsequent methods down the stack.
-			// Moq is installed to help you.
+            var repo = mockRepo.Object;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(repo);
+            Assert.IsNotNull(repo.GetAllDogOwners());
+            Assert.IsInstanceOfType(repo.GetAllDogOwners(), typeof(List<DogOwner>));
+            Assert.IsTrue(repo.GetAllDogOwners().Count > 0);
 		}
-	}
+
+        private List<DogOwner> GetTestDogOwners()
+        {
+            return new List<DogOwner>{
+                new DogOwner
+                {
+                    OwnerName = "Test Owner 1",
+                    DogNames = new List<string> { "Dog 1", "Dog 2" }
+                }
+            };
+        }
+    }
 }
