@@ -21,7 +21,7 @@ namespace RobsDogs.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostDogOwner([FromBody] DogOwnerRequest request)
+        public async Task<IActionResult> PostDogOwner(DogOwnerRequest request)
         {
             if (request == null)
             {

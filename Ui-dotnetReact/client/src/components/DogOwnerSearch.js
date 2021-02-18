@@ -20,7 +20,7 @@ const styles = {
 const DogOwnerSearch = () => {
   const [ownerId, setOwnerId] = useState('')
   const [ownerName, setOwnerName] = useState('')
-  const [dogName, setDogName] = useState('')
+  const [dogNames, setDogNames] = useState('')
 
   useEffect(() => {
 
@@ -46,7 +46,7 @@ const DogOwnerSearch = () => {
     console.log(json)
     setOwnerId(json.id)
     setOwnerName(json.ownerName)
-    setDogName(json.dogName)
+    json.dogNames.map(x => setDogNames(dogNames + x))
   }
 
   return (
@@ -80,7 +80,7 @@ const DogOwnerSearch = () => {
       <ListGroup horizontal>
         <ListGroup.Item variant="primary" style={styles.tableCell}>{ownerId}</ListGroup.Item>
         <ListGroup.Item style={styles.tableCell}>{ownerName}</ListGroup.Item>
-        <ListGroup.Item style={styles.tableCell}>{dogName}</ListGroup.Item>
+        <ListGroup.Item style={styles.tableCell}>{dogNames}</ListGroup.Item>
         <ListGroup.Item style={styles.tableCell}></ListGroup.Item>
       </ListGroup>
     </>

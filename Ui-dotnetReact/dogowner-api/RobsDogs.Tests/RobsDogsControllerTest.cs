@@ -11,7 +11,7 @@ using RobsDogs.Models.Domain;
 namespace RobsDogs.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class RogsDogsControllerTest
     {
         [TestMethod]
         public async Task Index()

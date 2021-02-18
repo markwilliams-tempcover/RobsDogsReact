@@ -4,7 +4,8 @@ import {
   Row,
   Col,
   Card,
-  Button
+  Button,
+  ListGroup
 } from 'react-bootstrap'
 
 import config from '../config.json'
@@ -12,13 +13,35 @@ import config from '../config.json'
 import DogOwnerRegistration from '../components/DogOwnerRegistration'
 import DogOwnerSearch from '../components/DogOwnerSearch'
 
-const Main = () => {
-  const [ownderId, setOwnerId] = useState('')
-  const [openBox, setOpenBox] = useState(false)
-  const [dogName, setdogName] = useState('')
+const styles = {
+  tableCell: {
+    width: '25%'
+  },
+}
 
-  useEffect(() => {
+
+const Main = () => {
+
+  const [openBox, setOpenBox] = useState(false)
+  const [dogOwners, setDogOwners] = useState([])
+
+  useEffect( () => {
+  
+    (async () => {
+      const url = `${config.API_HOST}`
+      const response = await fetch(url, {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'applicaton/json',
+        },
+      })
+
+      setDogOwners(await response.json())
+      console.log(dogOwners)
+    })()
   }, [])
+
 
   return (
     <Container>
@@ -65,7 +88,29 @@ const Main = () => {
       </Row>
       <Row>
         <Col md={12}>
-          <DogOwnerSearch />
+          {/* <DogOwnerSearch /> */}
+        </Col>
+      </Row>
+      <Row>
+        <Col md={12}>
+          <ListGroup horizontal>
+            <ListGroup.Item variant="primary" style={styles.tableCell}>ID</ListGroup.Item>
+            <ListGroup.Item style={styles.tableCell}>Owner Name</ListGroup.Item>
+            <ListGroup.Item style={styles.tableCell}>Dog's Name</ListGroup.Item>
+            <ListGroup.Item style={styles.tableCell}>Note</ListGroup.Item>
+          </ListGroup>
+
+          {
+            (dogOwners) &&
+            dogOwners.map((x,i) => (
+              <ListGroup horizontal key={i}>
+                <ListGroup.Item variant="primary" style={styles.tableCell}>{x.id}</ListGroup.Item>
+                <ListGroup.Item style={styles.tableCell}>{x.ownerName}</ListGroup.Item>
+                <ListGroup.Item style={styles.tableCell}>{x.dogNames.toString()}</ListGroup.Item>
+                <ListGroup.Item style={styles.tableCell}></ListGroup.Item>
+              </ListGroup>
+            ))
+          }
         </Col>
       </Row>
     </Container>

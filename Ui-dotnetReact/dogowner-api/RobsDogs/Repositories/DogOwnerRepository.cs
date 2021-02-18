@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,9 +19,8 @@ namespace RobsDogs.Repositories
         }
         public async Task Save(DogOwner dogOwner)
         {
-            var dogOwnerData = new DogOwnerData
-            {
-                OwnerName = dogOwner.OwnerName, 
+            var dogOwnerData = new DogOwnerData {
+                OwnerName = dogOwner.OwnerName,
                 DogNames = string.Join(",", dogOwner.DogNames)
             };
 

@@ -7,6 +7,5 @@ namespace RobsDogs.Models.Api
         public string OwnerName { get; set; }
 
         public IEnumerable<string> DogNames { get; set; }
-        
     }
 }

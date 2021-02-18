@@ -12,7 +12,7 @@ import config from '../config.json'
 
 const DogOwnerRegistration = ({onOpen}) => {
   const [ownerName, setOwnerName] = useState('')
-  const [dogName, setDogName] = useState('')
+  const [dogNames, setDogNames] = useState('')
 
   useEffect(() => {
 
@@ -20,7 +20,8 @@ const DogOwnerRegistration = ({onOpen}) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    console.log(ownerName, dogName)
+    console.log(ownerName, dogNames)
+
     const url = `${config.API_HOST}`
 
     const response = await fetch(url, {
@@ -33,7 +34,7 @@ const DogOwnerRegistration = ({onOpen}) => {
       },
       body: JSON.stringify({
         ownerName: ownerName,
-        dogName: dogName
+        dogNames: dogNames.split(',')
       })
     })
 
@@ -62,13 +63,13 @@ const DogOwnerRegistration = ({onOpen}) => {
                 We'll never share your name with anyone else.
               </Form.Text>
             </Form.Group>
-            <Form.Group controlId="dogName">
+            <Form.Group controlId="dogNames">
               <Form.Label>Dog Name</Form.Label>
               <Form.Control 
                 type="text" 
                 placeholder="Enter your dogs' names" 
-                value={dogName}
-                onChange={(e) => setDogName(e.target.value)}
+                value={dogNames}
+                onChange={(e) => setDogNames(e.target.value)}
               />
             </Form.Group>
           </Modal.Body>
