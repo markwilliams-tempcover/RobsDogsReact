@@ -19,6 +19,9 @@ namespace Ui.DependencyResolution {
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using StructureMap.Graph;
+    using Ui.Interfaces;
+    using Ui.Data;
+    using Ui.Services;
 	
     public class DefaultRegistry : Registry {
         #region Constructors and Destructors
@@ -31,7 +34,8 @@ namespace Ui.DependencyResolution {
 					scan.WithDefaultConventions();
 					scan.With(new ControllerConvention());
                 });
-            //For<IExample>().Use<Example>();
+            For<IDogOwnerRepository>().Use<DogOwnerRepository>();
+            For<IDogOwnerService>().Use<DogOwnerService>();
         }
 
         #endregion

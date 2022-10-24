@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Ui.Interfaces;
 using Ui.Models;
 using Ui.Services;
 
@@ -7,23 +8,24 @@ namespace Ui.ViewModelMappers
 {
 	public class DogOwnerViewModelMapper
 	{
-		public DogOwnerListViewModel GetAllDogOwners()
+        private readonly IDogOwnerService _dogOwnerService;
+
+        public DogOwnerViewModelMapper(IDogOwnerService dogOwnerService)
+        {
+            _dogOwnerService = dogOwnerService;
+        }
+
+        public DogOwnerListViewModel GetAllDogOwners()
 		{
-			var dogOwnerService = new DogOwnerService();
-			var dogOwners = dogOwnerService.GetAllDogOwners();
-			var dogOwnerListViewModel = new DogOwnerListViewModel
+			var dogOwners = _dogOwnerService.GetAllDogOwners();
+            return new DogOwnerListViewModel
 			{
 				DogOwnerViewModels = dogOwners.Select(e => new DogOwnerViewModel
 				{
 					OwnerName = e.OwnerName,
-					DogNames = new List<string>
-					{
-						e.DogName
-					}
+					DogNames = e.DogNames,
 				}).ToList()
 			};
-
-			return dogOwnerListViewModel;
 		} 
 	}
 }

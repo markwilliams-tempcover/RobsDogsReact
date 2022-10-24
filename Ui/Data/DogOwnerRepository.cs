@@ -1,22 +1,21 @@
 ﻿using System.Collections.Generic;
 using Ui.Entities;
+using Ui.Interfaces;
 
 namespace Ui.Data
 {
-	public class DogOwnerRepository
+	public class DogOwnerRepository : IDogOwnerRepository
 	{
 		public List<DogOwner> GetAllDogOwners()
 		{
-			var dogOwnerList = new List<DogOwner>
-			{
-				new DogOwner
-				{
-					OwnerName = "Rob",
-					DogName = "Willow"
-				}
-			};
-
-			return dogOwnerList;
+			return new List<DogOwner>
+            {
+                new DogOwner
+                {
+                    OwnerName = "Rob",
+                    DogNames = new List<string> {"Willow", "Nook", "Sox"},
+                }
+            }; ;
 		} 
 	}
 }
